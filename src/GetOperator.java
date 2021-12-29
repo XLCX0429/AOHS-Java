@@ -8,7 +8,7 @@ public class GetOperator {
         return UpSix;
     }
 
-    public void setUpSix(int[] upSix) {
+    public static void setUpSix(int[] upSix) {
         UpSix = upSix;
     }
 
@@ -16,7 +16,7 @@ public class GetOperator {
         return UpFive;
     }
 
-    public void setUpFive(int[] upFive) {
+    public static void setUpFive(int[] upFive) {
         UpFive = upFive;
     }
 

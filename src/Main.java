@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {//从文件中加载干员
@@ -29,6 +28,7 @@ public class Main {//从文件中加载干员
         Operator.setFourStar(ReadFile("FourStar"));
         Operator.setThreeStar(ReadFile("ThreeStar"));
         Operator.setAllStar();
+        GetUp.GetFromFile();
     }
 
     public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class Main {//从文件中加载干员
 
         System.out.print("\033[37m");
         System.out.println("抽卡模拟器");
-        System.out.println("卡池:");
+        System.out.println("卡池:" + GetUp.getTitle());
         System.out.println("本期UP:");
         System.out.print("六星:");
         for (int i = 0; i < GetOperator.getUpSix().length; i++) {

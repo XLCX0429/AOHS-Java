@@ -1,9 +1,16 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class GetUp {
     static String Title;
+    static ArrayList<Up> getUp = new ArrayList<>();
+
+    public static ArrayList<Up> getGetUp() {
+        return getUp;
+    }
 
     public static String getTitle() {
         return Title;
@@ -11,97 +18,97 @@ public class GetUp {
 
     static void GetFromFile() {
         File file = new File("res/Up/Standard");
+        String Line;
+        String no = null;
         String title = null;
         String UpSix = null;
         String UpFive = null;
-        boolean TextStart = false;
         String Temp;
-        ArrayList<Integer> Up = new ArrayList<>();
-        int[] up;
+        ArrayList<String> LineList = new ArrayList<>();
 
         ArrayList<String> textList = new ArrayList<>();
-
-        /*try {
-            if (!file.exists()) {
-            file.createNewFile();
-        }
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for (int i : GetOperator.getUpSix()) bufferedWriter.write(Integer.toString(i));
-            bufferedWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            title = bufferedReader.readLine();
-            UpSix = bufferedReader.readLine();
-            UpFive = bufferedReader.readLine();
+            bufferedReader.readLine();
+            Line = bufferedReader.readLine();
+            while (Line != null) {
+                LineList.add(Line);
+                Line = bufferedReader.readLine();
+            }
 
             bufferedReader.close();
             fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < Objects.requireNonNull(title).length(); i++) {
-            if (title.charAt(i) == ' ') TextStart = true;
-            if (TextStart && title.charAt(i) != ' ') textList.add(String.valueOf(title.charAt(i)));
-            if (i == title.length() - 1) {
-                TextStart = false;
-                Temp = String.join("", textList);
-                textList.clear();
-                Title = Temp;
-            }
-        }
-        for (int i = 0; i < Objects.requireNonNull(UpSix).length(); i++) {
-            if (UpSix.charAt(i) == ' ') TextStart = true;
-            if (UpSix.charAt(i) == ',') {
-                TextStart = false;
-                Temp = String.join("", textList);
-                textList.clear();
-                for (int j = 0; j < Operator.getSixStar().length; j++) {
-                    if (Temp.equals(Operator.getSixStar()[j])) Up.add(j);
+        System.out.println(LineList);
+        for (String s : LineList) {
+            int object = 0;
+            Line = s;
+            for (int i = 0; i < Line.length(); i++) {
+                if (Line.charAt(i) != ';') textList.add(String.valueOf(Line.charAt(i)));
+                if (Line.charAt(i) == ';' || i == Line.length() - 1) {
+                    Temp = String.join("", textList);
+                    textList.clear();
+                    switch (object) {
+                        case 0:
+                            no = Temp;
+                            break;
+                        case 1:
+                            title = Temp;
+                            break;
+                        case 2:
+                            UpSix = Temp;
+                            break;
+                        case 3:
+                            UpFive = Temp;
+                            break;
+                    }
+                    object++;
                 }
             }
-            if (TextStart && UpSix.charAt(i) != ' ') textList.add(String.valueOf(UpSix.charAt(i)));
-            if (i == UpSix.length() - 1) {
-                TextStart = false;
+            getUp.add(new Up(no, title, UpSix, UpFive));
+        }
+    }
+
+    static void ChooseUp(int i) {
+        Title = getUp.get(i).getTitle();
+        String UpSix = getUp.get(i).getUpSix();
+        String UpFive = getUp.get(i).getUpFive();
+        ArrayList<String> textList = new ArrayList<>();
+        String Temp;
+        ArrayList<Integer> Up = new ArrayList<>();
+        int[] up;
+
+        for (int j = 0; j < UpSix.length(); j++) {
+            if (UpSix.charAt(j) != ',') textList.add(String.valueOf(UpSix.charAt(j)));
+            if (UpSix.charAt(j) == ',' || j == UpSix.length() - 1) {
                 Temp = String.join("", textList);
                 textList.clear();
-                for (int j = 0; j < Operator.getSixStar().length; j++) {
-                    if (Temp.equals(Operator.getSixStar()[j])) Up.add(j);
+                for (int k = 0; k < Operator.getSixStar().length; k++) {
+                    if (Temp.equals(Operator.getSixStar()[k])) Up.add(k);
                 }
             }
         }
         up = new int[Up.size()];
-        for (int i = 0; i < Up.size(); i++) up[i] = Up.get(i);
+        for (int j = 0; j < Up.size(); j++) up[j] = Up.get(j);
         GetOperator.setUpSix(up);
         Up.clear();
 
-        for (int i = 0; i < Objects.requireNonNull(UpFive).length(); i++) {
-            if (UpFive.charAt(i) == ' ') TextStart = true;
-            if (UpFive.charAt(i) == ',') {
-                TextStart = false;
+        for (int j = 0; j < UpFive.length(); j++) {
+            if (UpFive.charAt(j) != ',') textList.add(String.valueOf(UpFive.charAt(j)));
+            if (UpFive.charAt(j) == ',' || j == UpFive.length() - 1) {
                 Temp = String.join("", textList);
                 textList.clear();
-                for (int j = 0; j < Operator.getFiveStar().length; j++) {
-                    if (Temp.equals(Operator.getFiveStar()[j])) Up.add(j);
-                }
-            }
-            if (TextStart && UpFive.charAt(i) != ' ') textList.add(String.valueOf(UpFive.charAt(i)));
-            if (i == UpFive.length() - 1) {
-                TextStart = false;
-                Temp = String.join("", textList);
-                textList.clear();
-                for (int j = 0; j < Operator.getFiveStar().length; j++) {
-                    if (Temp.equals(Operator.getFiveStar()[j])) Up.add(j);
+                for (int k = 0; k < Operator.getFiveStar().length; k++) {
+                    if (Temp.equals(Operator.getFiveStar()[k])) Up.add(k);
                 }
             }
         }
         up = new int[Up.size()];
-        for (int i = 0; i < Up.size(); i++) up[i] = Up.get(i);
+        for (int j = 0; j < Up.size(); j++) up[j] = Up.get(j);
         GetOperator.setUpFive(up);
         Up.clear();
     }

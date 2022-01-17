@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -8,18 +9,32 @@ public class Main {
         System.out.println("抽卡模拟器");
         System.out.println("卡池:" + GetUp.getTitle());
         System.out.println("本期UP:");
-        System.out.print("六星:");
-        for (int i = 0; i < GetOperator.getUpSix().length; i++) {
-            System.out.print(Operator.getSixStar()[GetOperator.getUpSix()[i]]);
-            if (i == GetOperator.getUpSix().length - 1) System.out.println();
-            else System.out.print(",");
+        if (GetOperator.getUpSix().length != 0) {
+            System.out.print("六星:");
+            for (int i = 0; i < GetOperator.getUpSix().length; i++) {
+                System.out.print(Operator.getSixStar()[GetOperator.getUpSix()[i]]);
+                if (i == GetOperator.getUpSix().length - 1) System.out.println();
+                else System.out.print(",");
+            }
         }
-        System.out.print("五星:");
-        for (int i = 0; i < GetOperator.getUpFive().length; i++) {
-            System.out.print(Operator.getFiveStar()[GetOperator.getUpFive()[i]]);
-            if (i == GetOperator.getUpFive().length - 1) System.out.println();
-            else System.out.print(",");
+
+        if (GetOperator.getUpFive().length != 0) {
+            System.out.print("五星:");
+            for (int i = 0; i < GetOperator.getUpFive().length; i++) {
+                System.out.print(Operator.getFiveStar()[GetOperator.getUpFive()[i]]);
+                if (i == GetOperator.getUpFive().length - 1) System.out.println();
+                else System.out.print(",");
+            }
         }
+        if (GetOperator.getUpFour().length != 0) {
+            System.out.print("四星:");
+            for (int i = 0; i < GetOperator.getUpFour().length; i++) {
+                System.out.print(Operator.getFourStar()[GetOperator.getUpFour()[i]]);
+                if (i == GetOperator.getUpFour().length - 1) System.out.println();
+                else System.out.print(",");
+            }
+        }
+
         System.out.println("★★★★★★:2%");
         System.out.println("★★★★★:8%");
         System.out.println("★★★★:50%");

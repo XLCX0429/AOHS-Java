@@ -18,8 +18,8 @@ public class GetUp {
         return Title;
     }
 
-    static void GetFromFile() {
-        File file = new File("res/Up/Standard");
+    static void GetFromFile(String string) {//从文件中获取信息
+        File file = new File("res/Up/" + string);
         String Line;
         String no = null;
         String title = null;
@@ -50,6 +50,7 @@ public class GetUp {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        getUp.clear();
         for (String s : LineList) { //读取文件中每一行的信息
             int object = 0;
             Line = s;

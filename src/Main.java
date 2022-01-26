@@ -9,6 +9,7 @@ public class Main {
         System.out.println("抽卡模拟器");
         System.out.println("卡池:" + GetUp.getTitle());
         System.out.println("本期UP:");
+
         if (GetOperator.getUpSix().length != 0) {
             System.out.print("六星:");
             for (int i = 0; i < GetOperator.getUpSix().length; i++) {
@@ -26,6 +27,7 @@ public class Main {
                 else System.out.print(",");
             }
         }
+
         if (GetOperator.getUpFour().length != 0) {
             System.out.print("四星:");
             for (int i = 0; i < GetOperator.getUpFour().length; i++) {
@@ -66,7 +68,7 @@ public class Main {
         Operator.setFourStar(ReadFile("FourStar"));
         Operator.setThreeStar(ReadFile("ThreeStar"));
         Operator.setAllStar();
-        GetUp.GetFromFile();
+        //GetUp.GetFromFile();
     }
 
     public static void main(String[] args) {
@@ -75,9 +77,11 @@ public class Main {
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String s = bufferedReader.readLine();
             int i = Integer.parseInt(bufferedReader.readLine());
             bufferedReader.close();
             fileReader.close();
+            GetUp.GetFromFile(s);
             GetUp.ChooseUp(i);
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,13 +108,14 @@ public class Main {
                     for (int j = 0; j < 10; j++) new Headhunt();
                     break;
                 case 3:
-                    System.out.println("1.标准寻访卡池");
-                    System.out.println("2.活动寻访卡池");
-                    System.out.println("3.限定寻访卡池");
+                    System.out.println("1.常驻标准寻访卡池");
+                    System.out.println("2.限时标准寻访卡池");
+                    System.out.println("3.限时限定寻访卡池");
                     System.out.print("输入选项:");
                     int j = in.nextInt();
                     switch (j) {
                         case 1:
+                            GetUp.GetFromFile("Standard");
                             System.out.println("序号    卡池名称    六星UP    五星UP");
                             for (int k = 0; k < GetUp.getGetUp().size(); k++) {
                                 GetUp.getGetUp().get(k).get();
@@ -119,6 +124,8 @@ public class Main {
                             try {
                                 FileWriter fileWriter = new FileWriter(file);
                                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                                bufferedWriter.write("Standard");
+                                bufferedWriter.write("\n");
                                 bufferedWriter.write(String.valueOf(c));
                                 bufferedWriter.close();
                                 fileWriter.close();
@@ -129,7 +136,25 @@ public class Main {
                             Menu();
                             break;
                         case 2:
-                            System.out.println("咕咕咕");
+                            GetUp.GetFromFile("Activity");
+                            System.out.println("序号    卡池名称    六星UP    五星UP");
+                            for (int k = 0; k < GetUp.getGetUp().size(); k++) {
+                                GetUp.getGetUp().get(k).get();
+                            }
+                            c = in.nextInt() - 1;
+                            try {
+                                FileWriter fileWriter = new FileWriter(file);
+                                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                                bufferedWriter.write("Activity");
+                                bufferedWriter.write("\n");
+                                bufferedWriter.write(String.valueOf(c));
+                                bufferedWriter.close();
+                                fileWriter.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            GetUp.ChooseUp(c);
+                            Menu();
                             break;
                         case 3:
                             System.out.println("咕咕咕");

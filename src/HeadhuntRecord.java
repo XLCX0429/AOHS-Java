@@ -20,7 +20,7 @@ public class HeadhuntRecord {
     static void Classification() {
         for (String s : Record) {
             int i = 0;
-            while (!Objects.equals(s, Operator.AllStar[i])) {
+            while (!Objects.equals(s, Operator.AllStar[i])) {//与全部干员做对比，找到相同的并定位
                 i++;
             }
             if (i < Operator.getSixStar().length) SixStar.add(s);

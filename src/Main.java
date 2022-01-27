@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +10,7 @@ public class Main {
         System.out.println("本期UP:");
 
         if (GetOperator.getUpSix().length != 0) {
-            System.out.print("六星:");
+            System.out.print("\033[31m六星:");
             for (int i = 0; i < GetOperator.getUpSix().length; i++) {
                 System.out.print(Operator.getSixStar()[GetOperator.getUpSix()[i]]);
                 if (i == GetOperator.getUpSix().length - 1) System.out.println();
@@ -20,7 +19,7 @@ public class Main {
         }
 
         if (GetOperator.getUpFive().length != 0) {
-            System.out.print("五星:");
+            System.out.print("\033[33m五星:");
             for (int i = 0; i < GetOperator.getUpFive().length; i++) {
                 System.out.print(Operator.getFiveStar()[GetOperator.getUpFive()[i]]);
                 if (i == GetOperator.getUpFive().length - 1) System.out.println();
@@ -29,7 +28,7 @@ public class Main {
         }
 
         if (GetOperator.getUpFour().length != 0) {
-            System.out.print("四星:");
+            System.out.print("\033[35m四星:");
             for (int i = 0; i < GetOperator.getUpFour().length; i++) {
                 System.out.print(Operator.getFourStar()[GetOperator.getUpFour()[i]]);
                 if (i == GetOperator.getUpFour().length - 1) System.out.println();
@@ -37,10 +36,10 @@ public class Main {
             }
         }
 
-        System.out.println("★★★★★★:2%");
-        System.out.println("★★★★★:8%");
-        System.out.println("★★★★:50%");
-        System.out.println("★★★:40%");
+        System.out.println("\033[31m★★★★★★:2%");
+        System.out.println("\033[33m★★★★★:8%");
+        System.out.println("\033[35m★★★★:50%");
+        System.out.println("\033[37m★★★:40%");
     }
 
     static String[] ReadFile(String fileName) {//从文件中加载干员
@@ -116,7 +115,6 @@ public class Main {
                     switch (j) {
                         case 1:
                             GetUp.GetFromFile("Standard");
-                            System.out.println("序号    卡池名称    六星UP    五星UP");
                             for (int k = 0; k < GetUp.getGetUp().size(); k++) {
                                 GetUp.getGetUp().get(k).get();
                             }
@@ -137,7 +135,6 @@ public class Main {
                             break;
                         case 2:
                             GetUp.GetFromFile("Activity");
-                            System.out.println("序号    卡池名称    六星UP    五星UP");
                             for (int k = 0; k < GetUp.getGetUp().size(); k++) {
                                 GetUp.getGetUp().get(k).get();
                             }

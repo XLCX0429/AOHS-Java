@@ -69,32 +69,44 @@ public class GetOperator {
                 break;
             case 5:
                 System.out.print("\033[33m");
-                m = i.nextInt(2);
-                if(m < 1) {
-                    n = i.nextInt(LastFive);
-                    for (int j : UpFive) while (n == j) n = i.nextInt(LastFive);
-                    GetOperator = Operator.getFiveStar()[n];
-                }
-                else {
+                if (UpFive.length == 6) {//联合行动
                     n = i.nextInt(UpFive.length);
                     GetOperator = Operator.getFiveStar()[UpFive[n]];
+                }
+                else {//非联合行动
+                    m = i.nextInt(2);
+                    if(m < 1) {
+                        n = i.nextInt(LastFive);
+                        for (int j : UpFive) while (n == j) n = i.nextInt(LastFive);
+                        GetOperator = Operator.getFiveStar()[n];
+                    }
+                    else {
+                        n = i.nextInt(UpFive.length);
+                        GetOperator = Operator.getFiveStar()[UpFive[n]];
+                    }
                 }
                 System.out.println(GetOperator);
                 break;
             case 6:
                 System.out.print("\033[31m");
-                m = i.nextInt(2);
-                if(m < 1) {//非UP
-                    n = i.nextInt(LastSix);
-                    for (int j : UpSix) while (n == j) n = i.nextInt(LastSix);//如果是UP的，就重新随机
-                    GetOperator = Operator.getSixStar()[n];
-                }
-                else {//UP
+                if (UpSix.length == 4) {//联合行动
                     n = i.nextInt(UpSix.length);
                     GetOperator = Operator.getSixStar()[UpSix[n]];
                 }
+                else {//非联合行动
+                    m = i.nextInt(2);
+                    if(m < 1) {//非UP
+                        n = i.nextInt(LastSix);
+                        for (int j : UpSix) while (n == j) n = i.nextInt(LastSix);//如果是UP的，就重新随机
+                        GetOperator = Operator.getSixStar()[n];
+                    }
+                    else {//UP
+                        n = i.nextInt(UpSix.length);
+                        GetOperator = Operator.getSixStar()[UpSix[n]];
+                    }
+                }
+
                 System.out.println(GetOperator);
-                /*SixStarRecord.add(GetOperator);*/
                 break;
         }
         HeadhuntRecord.getRecord().add(GetOperator);

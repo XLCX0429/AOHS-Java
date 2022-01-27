@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Up {
     String no;
     String title;
@@ -8,10 +10,6 @@ public class Up {
     String LastFive;
     String LastFour;
     String LastThree;
-
-    public String getNo() {
-        return no;
-    }
 
     public String getTitle() {
         return title;
@@ -57,6 +55,11 @@ public class Up {
         this.LastThree = LastThree;
     }
     void get() {
-        System.out.println(no + "    " + title + "    " + UpSix + "    " + UpFive);
+        if (!Objects.equals(no, "")) System.out.print("\033[37m卡池" + no);
+        if (!Objects.equals(title, "")) System.out.print("    卡池名称:" + title);
+        if (!Objects.equals(UpSix, "")) System.out.print("    \033[31m六星UP:" + UpSix);
+        if (!Objects.equals(UpFive, "")) System.out.print("    \033[33m五星UP:" + UpFive);
+        if (!Objects.equals(UpFour, "")) System.out.print("    \033[35m四星UP:" + UpFour);
+        System.out.println();
     }
 }

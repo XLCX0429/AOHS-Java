@@ -12,8 +12,9 @@ public class Main {
         if (GetOperator.getUpSix().length != 0) {
             System.out.print("\033[31m六星:");
             for (int i = 0; i < GetOperator.getUpSix().length; i++) {
-                System.out.print(Operator.getSixStar()[GetOperator.getUpSix()[i]]);
-                if (i == GetOperator.getUpSix().length - 1) System.out.println();
+                if (GetOperator.isLimit() && i == 0) System.out.print(Operator.getLimitSixStar()[GetOperator.getUpSix()[i]] + "[限定]");
+                else System.out.print(Operator.getSixStar()[GetOperator.getUpSix()[i]]);
+                if (i == GetOperator.getUpSix().length - 1) System.out.println("(占6★出率的" + GetOperator.getProbability() + "%)");
                 else System.out.print(",");
             }
         }
@@ -22,7 +23,7 @@ public class Main {
             System.out.print("\033[33m五星:");
             for (int i = 0; i < GetOperator.getUpFive().length; i++) {
                 System.out.print(Operator.getFiveStar()[GetOperator.getUpFive()[i]]);
-                if (i == GetOperator.getUpFive().length - 1) System.out.println();
+                if (i == GetOperator.getUpFive().length - 1) System.out.println("(占5★出率的50%)");
                 else System.out.print(",");
             }
         }
@@ -31,7 +32,7 @@ public class Main {
             System.out.print("\033[35m四星:");
             for (int i = 0; i < GetOperator.getUpFour().length; i++) {
                 System.out.print(Operator.getFourStar()[GetOperator.getUpFour()[i]]);
-                if (i == GetOperator.getUpFour().length - 1) System.out.println();
+                if (i == GetOperator.getUpFour().length - 1) System.out.println(("(占4★出率的50%)"));
                 else System.out.print(",");
             }
         }
@@ -62,6 +63,8 @@ public class Main {
     }
 
     static void LoadOperator() {
+        Operator.setLimitSixStar(ReadFile("LimitSixStar"));
+        //System.out.println(Arrays.toString(Operator.getLimitSixStar()));
         Operator.setSixStar(ReadFile("SixStar"));
         Operator.setFiveStar(ReadFile("FiveStar"));
         Operator.setFourStar(ReadFile("FourStar"));
@@ -82,9 +85,23 @@ public class Main {
             fileReader.close();
             GetUp.GetFromFile(s);
             GetUp.ChooseUp(i);
+            switch (s) {
+                case "Standard":
+                    GetOperator.setActivity(false);
+                    GetOperator.setLimit(false);
+                    break;
+                case "Activity":
+                    GetOperator.setActivity(true);
+                    GetOperator.setLimit(false);
+                    break;
+                case "Limit":
+                    GetOperator.setActivity(true);
+                    GetOperator.setLimit(true);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        GetOperator.setProbability();
         Scanner in = new Scanner(System.in);
         Menu();
 
@@ -131,6 +148,8 @@ public class Main {
                                 e.printStackTrace();
                             }
                             GetUp.ChooseUp(c);
+                            GetOperator.setActivity(false);
+                            GetOperator.setLimit(false);
                             Menu();
                             break;
                         case 2:
@@ -151,12 +170,34 @@ public class Main {
                                 e.printStackTrace();
                             }
                             GetUp.ChooseUp(c);
+                            GetOperator.setActivity(true);
+                            GetOperator.setLimit(false);
                             Menu();
                             break;
                         case 3:
-                            System.out.println("咕咕咕");
+                            GetUp.GetFromFile("Limit");
+                            for (int k = 0; k < GetUp.getGetUp().size(); k++) {
+                                GetUp.getGetUp().get(k).get();
+                            }
+                            c = in.nextInt() - 1;
+                            try {
+                                FileWriter fileWriter = new FileWriter(file);
+                                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                                bufferedWriter.write("Limit");
+                                bufferedWriter.write("\n");
+                                bufferedWriter.write(String.valueOf(c));
+                                bufferedWriter.close();
+                                fileWriter.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            GetUp.ChooseUp(c);
+                            GetOperator.setActivity(true);
+                            GetOperator.setLimit(true);
+                            Menu();
                             break;
                     }
+                    GetOperator.setProbability();
                     break;
                 case 4:
                     System.out.println("当前已有 " + Headhunt.getLastSix() + " 次未出六星");

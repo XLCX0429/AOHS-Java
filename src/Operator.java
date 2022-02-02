@@ -1,9 +1,18 @@
 public class Operator {
+    static String[] LimitSixStar;
     static String[] SixStar;
     static String[] FiveStar;
     static String[] FourStar;
     static String[] ThreeStar;
     static String[] AllStar;
+
+    public static String[] getLimitSixStar() {
+        return LimitSixStar;
+    }
+
+    public static void setLimitSixStar(String[] limitSixStar) {
+        LimitSixStar = limitSixStar;
+    }
 
     public static String[] getSixStar() {
         return SixStar;
@@ -42,10 +51,16 @@ public class Operator {
     }
 
     public static void setAllStar() {
-        AllStar = new String[SixStar.length + FiveStar.length + FourStar.length + ThreeStar.length];
-        System.arraycopy(SixStar, 0, AllStar, 0, SixStar.length);
-        System.arraycopy(FiveStar, 0, AllStar, SixStar.length, FiveStar.length);
-        System.arraycopy(FourStar, 0, AllStar, SixStar.length + FiveStar.length, FourStar.length);
-        System.arraycopy(ThreeStar, 0, AllStar, AllStar.length - ThreeStar.length, ThreeStar.length);
+        int StringLength = 0;
+        AllStar = new String[LimitSixStar.length + SixStar.length + FiveStar.length + FourStar.length + ThreeStar.length];
+        System.arraycopy(LimitSixStar, 0, AllStar, StringLength, LimitSixStar.length);
+        StringLength += LimitSixStar.length;
+        System.arraycopy(SixStar, 0, AllStar, StringLength, SixStar.length);
+        StringLength += SixStar.length;
+        System.arraycopy(FiveStar, 0, AllStar, StringLength, FiveStar.length);
+        StringLength += FiveStar.length;
+        System.arraycopy(FourStar, 0, AllStar, StringLength, FourStar.length);
+        StringLength += FourStar.length;
+        System.arraycopy(ThreeStar, 0, AllStar, StringLength, ThreeStar.length);
     }
 }

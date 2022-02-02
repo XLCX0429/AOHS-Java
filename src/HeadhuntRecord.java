@@ -13,23 +13,21 @@ public class HeadhuntRecord {
         return Record;
     }
 
-    public void setRecord(ArrayList<String> record) {
-        Record = record;
-    }
-
     static void Classification() {
         for (String s : Record) {
             int i = 0;
-            while (!Objects.equals(s, Operator.AllStar[i])) {//与全部干员做对比，找到相同的并定位
+            while (!Objects.equals(s, Operator.getAllStar()[i])) {//与全部干员做对比，找到相同的并定位
                 i++;
             }
-            if (i < Operator.getSixStar().length) SixStar.add(s);
-            else if (i < Operator.getSixStar().length + Operator.getFiveStar().length) FiveStar.add(s);
-            else if (i < Operator.getSixStar().length + Operator.getFiveStar().length
-                    + Operator.getFourStar().length) FourStar.add(s);
+            if (i < Operator.getLimitSixStar().length + Operator.getSixStar().length) SixStar.add(s);
+            else if (i < Operator.getLimitSixStar().length + Operator.getSixStar().length
+                    + Operator.getFiveStar().length) FiveStar.add(s);
+            else if (i < Operator.getLimitSixStar().length + Operator.getSixStar().length
+                    + Operator.getFiveStar().length + Operator.getFourStar().length) FourStar.add(s);
             else ThreeStar.add(s);
         }
     }
+
     static void ShowRecord() {
         SixStar.clear();
         FiveStar.clear();

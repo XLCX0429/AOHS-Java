@@ -114,6 +114,9 @@ public class GetUp {
             if (UpSix.charAt(i) == ',' || i == UpSix.length() - 1) {
                 Temp = String.join("", textList);
                 textList.clear();
+                for (int k = 0; k < Operator.getLimitSixStar().length; k++) {
+                    if (Temp.equals(Operator.getLimitSixStar()[k])) Up.add(k);
+                }
                 for (int k = 0; k < Operator.getSixStar().length; k++) {
                     if (Temp.equals(Operator.getSixStar()[k])) Up.add(k);
                 }

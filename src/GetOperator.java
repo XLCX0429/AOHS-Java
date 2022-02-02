@@ -8,6 +8,9 @@ public class GetOperator {
     static int LastFive;
     static int LastFour;
     static int LastThree;
+    static boolean Activity = false;
+    static boolean Limit = false;
+    static int Probability;
 
     public static int[] getUpSix() {
         return UpSix;
@@ -47,6 +50,31 @@ public class GetOperator {
 
     public static void setLastThree(int lastThree) {
         LastThree = lastThree;
+    }
+
+    public boolean isActivity() {
+        return Activity;
+    }
+
+    public static void setActivity(boolean activity) {
+        Activity = activity;
+    }
+
+    public static boolean isLimit() {
+        return Limit;
+    }
+
+    public static void setLimit(boolean limit) {
+        Limit = limit;
+    }
+
+    public static int getProbability() {
+        return Probability;
+    }
+
+    public static void setProbability() {
+        if (Activity) Probability = 70;
+        else Probability = 50;
     }
 
     GetOperator(int Star) {
@@ -94,15 +122,34 @@ public class GetOperator {
                     GetOperator = Operator.getSixStar()[UpSix[n]];
                 }
                 else {//非联合行动
-                    m = i.nextInt(2);
-                    if(m < 1) {//非UP
-                        n = i.nextInt(LastSix);
-                        for (int j : UpSix) while (n == j) n = i.nextInt(LastSix);//如果是UP的，就重新随机
-                        GetOperator = Operator.getSixStar()[n];
+                    m = i.nextInt(100);
+                    if(m < (100 - Probability)) {//非UP
+                        if (Limit) {
+                            n = i.nextInt(LastSix + 5 * UpSix[0]);
+                            if (n < LastSix) {
+                                while (n == LastSix - 1) n = i.nextInt(LastSix);//如果是UP的，就重新随机
+                                GetOperator = Operator.getSixStar()[n];
+                            }
+                            else {
+                                GetOperator = Operator.getLimitSixStar()[(n - LastSix) / 5];
+                            }
+                        }
+                        else {
+                            n = i.nextInt(LastSix);
+                            for (int j : UpSix) while (n == j) n = i.nextInt(LastSix);//如果是UP的，就重新随机
+                            GetOperator = Operator.getSixStar()[n];
+                        }
                     }
                     else {//UP
-                        n = i.nextInt(UpSix.length);
-                        GetOperator = Operator.getSixStar()[UpSix[n]];
+                        if (Limit) {
+                            n = i.nextInt(UpSix.length);
+                            if (n == 0) GetOperator = Operator.getLimitSixStar()[UpSix[n]];
+                            else GetOperator = Operator.getSixStar()[UpSix[n]];
+                        }
+                        else {
+                            n = i.nextInt(UpSix.length);
+                            GetOperator = Operator.getSixStar()[UpSix[n]];
+                        }
                     }
                 }
 

@@ -54,6 +54,7 @@ public class Up {
         this.LastFour = LastFour;
         this.LastThree = LastThree;
     }
+
     void get() {
         if (!Objects.equals(no, "")) System.out.print("\033[37m卡池" + no);
         if (!Objects.equals(title, "")) System.out.print("    卡池名称:" + title);

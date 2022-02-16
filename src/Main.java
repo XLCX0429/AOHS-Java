@@ -94,7 +94,7 @@ public class Main {
                     GetOperator.setActivity(true);
                     GetOperator.setLimit(false);
                     break;
-                case "Limit":
+                case "LimitSpring":
                     GetOperator.setActivity(true);
                     GetOperator.setLimit(true);
             }
@@ -175,7 +175,7 @@ public class Main {
                             Menu();
                             break;
                         case 3:
-                            GetUp.GetFromFile("Limit");
+                            GetUp.GetFromFile("LimitSpring");
                             for (int k = 0; k < GetUp.getGetUp().size(); k++) {
                                 GetUp.getGetUp().get(k).get();
                             }
@@ -183,7 +183,7 @@ public class Main {
                             try {
                                 FileWriter fileWriter = new FileWriter(file);
                                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                                bufferedWriter.write("Limit");
+                                bufferedWriter.write("LimitSpring");
                                 bufferedWriter.write("\n");
                                 bufferedWriter.write(String.valueOf(c));
                                 bufferedWriter.close();

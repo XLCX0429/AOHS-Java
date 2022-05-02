@@ -1,5 +1,8 @@
 import java.util.Random;
 
+/**
+ * @author XLCX_
+ */
 public class GetOperator {
     static int[] UpSix;
     static int[] UpFive;
@@ -11,6 +14,9 @@ public class GetOperator {
     static boolean Activity = false;
     static boolean Limit = false;
     static int Probability;
+    static String[] LimitOperator;
+    static int UpLimit;
+    static int OldLimit;
 
     public static int[] getUpSix() {
         return UpSix;
@@ -73,89 +79,132 @@ public class GetOperator {
     }
 
     public static void setProbability() {
-        if (Activity) Probability = 70;
-        else Probability = 50;
+        if (Activity) {
+            Probability = 70;
+        } else {
+            Probability = 50;
+        }
     }
 
-    GetOperator(int Star) {
+    public static String[] getLimitOperator() {
+        return LimitOperator;
+    }
+
+    public static void setLimitOperator(String[] limitOperator) {
+        LimitOperator = limitOperator;
+    }
+
+    public static int getUpLimit() {
+        return UpLimit;
+    }
+
+    public static void setUpLimit(int upLimit) {
+        UpLimit = upLimit;
+    }
+
+    public static void separate(int number) {
+        OldLimit = getUpLimit() - number + 1;
+    }
+
+    GetOperator(int star) {
         Random i = new Random();
-        String GetOperator = null;
+        String getOperator = null;
         int n, m;
 
-        switch (Star) {
+        //联合行动UP数量
+        int sSix = 4;
+        int sFive = 6;
+
+        switch (star) {
             case 3:
                 System.out.print("\033[37m");
                 n = i.nextInt(LastThree);
-                GetOperator = Operator.getThreeStar()[n];
-                System.out.println(GetOperator);
+                getOperator = Operator.getThreeStar()[n];
+                System.out.println(getOperator);
                 break;
             case 4:
                 System.out.print("\033[35m");
                 n = i.nextInt(LastFour);
-                GetOperator = Operator.getFourStar()[n];
-                System.out.println(GetOperator);
+                getOperator = Operator.getFourStar()[n];
+                System.out.println(getOperator);
                 break;
             case 5:
                 System.out.print("\033[33m");
-                if (UpFive.length == 6) {//联合行动
+                //联合行动
+                if (UpFive.length == sFive) {
                     n = i.nextInt(UpFive.length);
-                    GetOperator = Operator.getFiveStar()[UpFive[n]];
-                }
-                else {//非联合行动
+                    getOperator = Operator.getFiveStar()[UpFive[n]];
+                } else {//非联合行动
                     m = i.nextInt(2);
                     if(m < 1) {
                         n = i.nextInt(LastFive);
-                        for (int j : UpFive) while (n == j) n = i.nextInt(LastFive);
-                        GetOperator = Operator.getFiveStar()[n];
-                    }
-                    else {
+                        for (int j : UpFive) {
+                            while (n == j) {
+                                n = i.nextInt(LastFive);
+                            }
+                        }
+                        getOperator = Operator.getFiveStar()[n];
+                    } else {
                         n = i.nextInt(UpFive.length);
-                        GetOperator = Operator.getFiveStar()[UpFive[n]];
+                        getOperator = Operator.getFiveStar()[UpFive[n]];
                     }
                 }
-                System.out.println(GetOperator);
+                System.out.println(getOperator);
                 break;
             case 6:
                 System.out.print("\033[31m");
-                if (UpSix.length == 4) {//联合行动
+                //联合行动
+                if (UpSix.length == sSix) {
                     n = i.nextInt(UpSix.length);
-                    GetOperator = Operator.getSixStar()[UpSix[n]];
-                }
-                else {//非联合行动
+                    getOperator = Operator.getSixStar()[UpSix[n]];
+                } else {//非联合行动
                     m = i.nextInt(100);
-                    if(m < (100 - Probability)) {//非UP
+                    //非UP
+                    //概率为100 - Probability
+                    int p = 100 - Probability;
+                    if(m < p) {
+                        //判断是否为限定
                         if (Limit) {
-                            n = i.nextInt(LastSix + 5 * UpSix[0]);
+                            n = i.nextInt(LastSix + 5 * OldLimit);
                             if (n < LastSix) {
-                                while (n == LastSix - 1) n = i.nextInt(LastSix);//如果是UP的，就重新随机
-                                GetOperator = Operator.getSixStar()[n];
+                                while (n == LastSix - 1) {
+                                    //如果是UP的，就重新随机
+                                    n = i.nextInt(LastSix);
+                                }
+                                getOperator = Operator.getSixStar()[n];
                             }
                             else {
-                                GetOperator = Operator.getLimitSixStar()[(n - LastSix) / 5];
+                                getOperator = LimitOperator[(n - LastSix) / 5];
                             }
-                        }
-                        else {
+                        } else {
                             n = i.nextInt(LastSix);
-                            for (int j : UpSix) while (n == j) n = i.nextInt(LastSix);//如果是UP的，就重新随机
-                            GetOperator = Operator.getSixStar()[n];
+                            for (int j : UpSix) {
+                                while (n == j) {
+                                    //如果是UP的，就重新随机
+                                    n = i.nextInt(LastSix);
+                                }
+                            }
+                            getOperator = Operator.getSixStar()[n];
                         }
-                    }
-                    else {//UP
+                    } else {//UP
                         if (Limit) {
+                            n = i.nextInt(2);
+                            if (n == 1) {
+                                getOperator = LimitOperator[UpLimit];
+                            } else {
+                                getOperator = Operator.getSixStar()[UpSix[n]];
+                            }
+                        } else {
                             n = i.nextInt(UpSix.length);
-                            if (n == 0) GetOperator = Operator.getLimitSixStar()[UpSix[n]];
-                            else GetOperator = Operator.getSixStar()[UpSix[n]];
-                        }
-                        else {
-                            n = i.nextInt(UpSix.length);
-                            GetOperator = Operator.getSixStar()[UpSix[n]];
+                            getOperator = Operator.getSixStar()[UpSix[n]];
                         }
                     }
                 }
 
-                System.out.println(GetOperator);
+                System.out.println(getOperator);
                 break;
+            default:
         }
-        HeadhuntRecord.getRecord().add(GetOperator);
+        HeadhuntRecord.getRecord().add(getOperator);
     }
 }

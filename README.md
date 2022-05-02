@@ -1,5 +1,5 @@
 # ✨✨✨AOHS-Java✨✨✨
-![!](https://count.getloli.com/get/@AOHS-Android?theme=rule34)
+![!](https://count.getloli.com/get/@AOHS-Java?theme=rule34)
 ## 🔥介绍❤️🔥
 小尘夕今天又沉了QAQ
 
@@ -33,11 +33,14 @@
 
 卡池选择显示问题
 
-限定卡池只有春节卡池
+限定池抽不到限定(严重问题)
 
-多种类型的限定卡池不能分隔
+限定池结束应用再重启失败
 ## 🔥已解决✔️🔥
 老卡池出现新干员
 
+限定卡池只有春节卡池
+
+多种类型的限定卡池不能分隔
 ## 🔥发现并修复Bug🐛🔥
 标准池和活动池的六星UP概率不一样

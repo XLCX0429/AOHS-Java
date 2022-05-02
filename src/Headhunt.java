@@ -1,5 +1,8 @@
 import java.util.Random;
 
+/**
+ * @author XLCX_
+ */
 public class Headhunt {
     static int FirstFive = 10;
     static boolean FirstFiveYes = false;
@@ -52,18 +55,28 @@ public class Headhunt {
         if (FirstFive == 1 && n <= S2) {
             int j = i.nextInt(5);
             if (j < 1) {getOperator = new GetOperator(6); LastSix = 0;}
-            else getOperator = new GetOperator(5);
+            else {
+                getOperator = new GetOperator(5);
+            }
             FirstFiveYes = true;
         }
         else {
             if (n > S1) {getOperator = new GetOperator(6); FirstFiveYes = true;}
             else if (n > S2) {getOperator = new GetOperator(5); FirstFiveYes = true;}
-            else if (n > S3) getOperator = new GetOperator(4);
-            else getOperator = new GetOperator(3);
+            else if (n > S3) {
+                getOperator = new GetOperator(4);
+            } else {
+                getOperator = new GetOperator(3);
+            }
         }
-        if (!FirstFiveYes) FirstFive--;
-        else FirstFive = 0;
-        if (n > S1) LastSix = 0;
+        if (!FirstFiveYes) {
+            FirstFive--;
+        } else {
+            FirstFive = 0;
+        }
+        if (n > S1) {
+            LastSix = 0;
+        }
         HeadhuntTime++;
     }
 }

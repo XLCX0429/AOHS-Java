@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
+/**
+ * @author XLCX_
+ */
 public class HeadhuntRecord {
     static ArrayList<String> Record = new ArrayList<>();
     static ArrayList<String> SixStar = new ArrayList<>();
@@ -16,15 +19,25 @@ public class HeadhuntRecord {
     static void Classification() {
         for (String s : Record) {
             int i = 0;
-            while (!Objects.equals(s, Operator.getAllStar()[i])) {//与全部干员做对比，找到相同的并定位
+
+            //与全部干员做对比，找到相同的并定位
+            while (!Objects.equals(s, Operator.getAllStar()[i])) {
                 i++;
             }
-            if (i < Operator.getLimitSixStar().length + Operator.getSixStar().length) SixStar.add(s);
-            else if (i < Operator.getLimitSixStar().length + Operator.getSixStar().length
-                    + Operator.getFiveStar().length) FiveStar.add(s);
-            else if (i < Operator.getLimitSixStar().length + Operator.getSixStar().length
-                    + Operator.getFiveStar().length + Operator.getFourStar().length) FourStar.add(s);
-            else ThreeStar.add(s);
+            if (i < Operator.getLimit().length + Operator.getLimitSpring().length
+                    + Operator.getLimitSummer().length + Operator.getSixStar().length) {
+                SixStar.add(s);
+            } else if (i < Operator.getLimit().length + Operator.getLimitSpring().length
+                    + Operator.getLimitSummer().length + Operator.getSixStar().length
+                    + Operator.getFiveStar().length) {
+                FiveStar.add(s);
+            } else if (i < Operator.getLimit().length + Operator.getLimitSpring().length
+                    + Operator.getLimitSummer().length + Operator.getSixStar().length
+                    + Operator.getFiveStar().length + Operator.getFourStar().length) {
+                FourStar.add(s);
+            } else {
+                ThreeStar.add(s);
+            }
         }
     }
 
@@ -69,13 +82,17 @@ public class HeadhuntRecord {
                     }
                     break;
                 }
+                default:
             }
             Collections.sort(Temp);
 
             for (int j = 0; j < Temp.size(); j++) {
                 System.out.print(Temp.get(j));
-                if (j % 5 == 4 || j == Temp.size() - 1) System.out.println();
-                else System.out.print(" ");
+                if (j % 5 == 4 || j == Temp.size() - 1) {
+                    System.out.println();
+                } else {
+                    System.out.print(" ");
+                }
             }
         }
     }

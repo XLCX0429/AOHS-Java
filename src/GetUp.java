@@ -3,9 +3,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * @author XLCX_
+ */
 public class GetUp {
     static String Title;
     static ArrayList<Up> getUp = new ArrayList<>();
@@ -18,31 +20,28 @@ public class GetUp {
         return Title;
     }
 
-    static void GetFromFile(String string) {//从文件中获取信息
+    static void getFromFile(String string) {//从文件中获取信息
         File file = new File("res/Up/" + string);
-        String Line;
+        String line;
         String no = null;
         String title = null;
-        String UpSix = null;
-        String UpFive = null;
-        String UpFour = null;
-        String LastSix = null;
-        String LastFive = null;
-        String LastFour = null;
-        String LastThree = null;
-        String Temp;
-        ArrayList<String> LineList = new ArrayList<>();
-
-        ArrayList<String> textList = new ArrayList<>();
+        String upSix = null;
+        String upFive = null;
+        String upFour = null;
+        String lastSix = null;
+        String lastFive = null;
+        String lastFour = null;
+        String lastThree = null;
+        ArrayList<String> lineList = new ArrayList<>();
 
         try {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             bufferedReader.readLine();
-            Line = bufferedReader.readLine();
-            while (Line != null) {
-                LineList.add(Line);
-                Line = bufferedReader.readLine();
+            line = bufferedReader.readLine();
+            while (line != null) {
+                lineList.add(line);
+                line = bufferedReader.readLine();
             }
 
             bufferedReader.close();
@@ -51,128 +50,204 @@ public class GetUp {
             e.printStackTrace();
         }
         getUp.clear();
-        for (String s : LineList) { //读取文件中每一行的信息
-            int object = 0;
-            Line = s;
-            for (int i = 0; i < Line.length(); i++) {
-                if (Line.charAt(i) != ';') textList.add(String.valueOf(Line.charAt(i)));
-                if (Line.charAt(i) == ';' || i == Line.length() - 1) {
-                    Temp = String.join("", textList);
-                    textList.clear();
-                    switch (object) {
-                        case 0:
-                            no = Temp;
-                            break;
-                        case 1:
-                            title = Temp;
-                            break;
-                        case 2:
-                            UpSix = Temp;
-                            break;
-                        case 3:
-                            UpFive = Temp;
-                            break;
-                        case 4:
-                            UpFour = Temp;
-                            break;
-                        case 5:
-                            LastSix = Temp;
-                            break;
-                        case 6:
-                            LastFive = Temp;
-                            break;
-                        case 7:
-                            LastFour = Temp;
-                            break;
-                        case 8:
-                            LastThree = Temp;
-                            break;
-                    }
-                    object++;
+        //读取文件中每一行的信息
+        for (String s : lineList) {
+            line = s;
+            String[] temp = line.split(";");
+            for (int i = 0; i < temp.length; i++) {
+                switch (i) {
+                    case 0:
+                        no = temp[i];
+                        break;
+                    case 1:
+                        title = temp[i];
+                        break;
+                    case 2:
+                        upSix = temp[i];
+                        break;
+                    case 3:
+                        upFive = temp[i];
+                        break;
+                    case 4:
+                        upFour = temp[i];
+                        break;
+                    case 5:
+                        lastSix = temp[i];
+                        break;
+                    case 6:
+                        lastFive = temp[i];
+                        break;
+                    case 7:
+                        lastFour = temp[i];
+                        break;
+                    case 8:
+                        lastThree = temp[i];
+                        break;
+                    default:
                 }
             }
-            getUp.add(new Up(no, title, UpSix, UpFive, UpFour, LastSix, LastFive, LastFour, LastThree));
+            getUp.add(new Up(no, title, upSix, upFive, upFour, lastSix, lastFive, lastFour, lastThree));
         }
     }
 
-    static void ChooseUp(int n) {
+    static void chooseUp(int n) {
         Title = getUp.get(n).getTitle();
-        String UpSix = getUp.get(n).getUpSix();
-        String UpFive = getUp.get(n).getUpFive();
-        String UpFour = getUp.get(n).getUpFour();
-        ArrayList<String> textList = new ArrayList<>();
-        String Temp;
-        ArrayList<Integer> Up = new ArrayList<>();
-        int[] up;
-        int LastSix;
-        int LastFive;
-        int LastFour;
-        int LastThree;
+        String upSix = getUp.get(n).getUpSix();
+        String upFive = getUp.get(n).getUpFive();
+        String upFour = getUp.get(n).getUpFour();
+        ArrayList<Integer> upList = new ArrayList<>();
+        String[] upSixList = null;
+        String[] upFiveList = null;
+        String[] upFourList = null;
+        if (upSix != null) {
+            upSixList = upSix.split(",");
+        }
+        if (upFive != null) {
+            upFiveList = upFive.split(",");
+        }
 
-        for (int i = 0; i < UpSix.length(); i++) {
-            if (UpSix.charAt(i) != ',') textList.add(String.valueOf(UpSix.charAt(i)));
-            if (UpSix.charAt(i) == ',' || i == UpSix.length() - 1) {
-                Temp = String.join("", textList);
+        if (upFour != null) {
+            upFourList = upFour.split(",");
+        }
+
+        int[] up;
+        int lastSix, lastFive, lastFour, lastThree;
+
+        for (String s : upSixList) {
+            for (int k = 0; k < Operator.getLimit().length; k++) {
+                if (s.equals(Operator.getLimit()[k])) {
+                    GetOperator.setUpLimit(k);
+                }
+            }
+            for (int k = 0; k < Operator.getLimitSpring().length; k++) {
+                if (s.equals(Operator.getLimit()[k])) {
+                    GetOperator.setUpLimit(k);
+                }
+            }
+            for (int k = 0; k < Operator.getLimitSummer().length; k++) {
+                if (s.equals(Operator.getLimit()[k])) {
+                    GetOperator.setUpLimit(k);
+                }
+            }
+            for (int k = 0; k < Operator.getSixStar().length; k++) {
+                if (s.equals(Operator.getSixStar()[k])) {
+                    upList.add(k);
+                }
+            }
+        }
+
+        /*for (int i = 0; i < upSix.length(); i++) {
+            if (upSix.charAt(i) != ',') {
+                textList.add(String.valueOf(upSix.charAt(i)));
+            }
+            if (upSix.charAt(i) == ',' || i == upSix.length() - 1) {
+                temp = String.join("", textList);
                 textList.clear();
-                for (int k = 0; k < Operator.getLimitSixStar().length; k++) {
-                    if (Temp.equals(Operator.getLimitSixStar()[k])) Up.add(k);
+                for (int k = 0; k < Operator.getLimit().length; k++) {
+                    if (temp.equals(Operator.getLimit()[k])) {
+                        upList.add(k);
+                    }
                 }
                 for (int k = 0; k < Operator.getSixStar().length; k++) {
-                    if (Temp.equals(Operator.getSixStar()[k])) Up.add(k);
+                    if (temp.equals(Operator.getSixStar()[k])) {
+                        upList.add(k);
+                    }
+                }
+            }
+        }*/
+        up = new int[upList.size()];
+        for (int i = 0; i < upList.size(); i++) {
+            up[i] = upList.get(i);
+        }
+        GetOperator.setUpSix(up);
+        upList.clear();
+
+        for (String s : upFiveList) {
+            for (int k = 0; k < Operator.getFiveStar().length; k++) {
+                if (s.equals(Operator.getFiveStar()[k])) {
+                    upList.add(k);
                 }
             }
         }
-        up = new int[Up.size()];
-        for (int i = 0; i < Up.size(); i++) up[i] = Up.get(i);
-        GetOperator.setUpSix(up);
-        Up.clear();
 
-        for (int i = 0; i < UpFive.length(); i++) {
-            if (UpFive.charAt(i) != ',') textList.add(String.valueOf(UpFive.charAt(i)));
-            if (UpFive.charAt(i) == ',' || i == UpFive.length() - 1) {
-                Temp = String.join("", textList);
+        /*for (int i = 0; i < upFive.length(); i++) {
+            if (upFive.charAt(i) != ',') {
+                textList.add(String.valueOf(upFive.charAt(i)));
+            }
+            if (upFive.charAt(i) == ',' || i == upFive.length() - 1) {
+                temp = String.join("", textList);
                 textList.clear();
                 for (int k = 0; k < Operator.getFiveStar().length; k++) {
-                    if (Temp.equals(Operator.getFiveStar()[k])) Up.add(k);
+                    if (temp.equals(Operator.getFiveStar()[k])) {
+                        upList.add(k);
+                    }
+                }
+            }
+        }*/
+        up = new int[upList.size()];
+        for (int i = 0; i < upList.size(); i++) {
+            up[i] = upList.get(i);
+        }
+        GetOperator.setUpFive(up);
+        upList.clear();
+
+        for (String s : upFourList) {
+            for (int k = 0; k < Operator.getFourStar().length; k++) {
+                if (s.equals(Operator.getFourStar()[k])) {
+                    upList.add(k);
                 }
             }
         }
-        up = new int[Up.size()];
-        for (int i = 0; i < Up.size(); i++) up[i] = Up.get(i);
-        GetOperator.setUpFive(up);
-        Up.clear();
 
-        for (int i = 0; i < UpFour.length(); i++) {
-            if (UpFour.charAt(i) != ',') textList.add(String.valueOf(UpFour.charAt(i)));
-            if (UpFour.charAt(i) == ',' || i == UpFour.length() - 1) {
-                Temp = String.join("", textList);
+        /*for (int i = 0; i < upFour.length(); i++) {
+            if (upFour.charAt(i) != ',') {
+                textList.add(String.valueOf(upFour.charAt(i)));
+            }
+            if (upFour.charAt(i) == ',' || i == upFour.length() - 1) {
+                temp = String.join("", textList);
                 textList.clear();
                 for (int k = 0; k < Operator.getFourStar().length; k++) {
-                    if (Temp.equals(Operator.getFourStar()[k])) Up.add(k);
+                    if (temp.equals(Operator.getFourStar()[k])) {
+                        upList.add(k);
+                    }
                 }
             }
+        }*/
+        up = new int[upList.size()];
+        for (int i = 0; i < upList.size(); i++) {
+            up[i] = upList.get(i);
         }
-        up = new int[Up.size()];
-        for (int i = 0; i < Up.size(); i++) up[i] = Up.get(i);
         GetOperator.setUpFour(up);
-        Up.clear();
+        upList.clear();
 
         //若干员界限值为空，则默认为全部
-        if (Objects.equals(getUp.get(n).getLastSix(), "")) LastSix = Operator.getSixStar().length;
-        else LastSix = Integer.parseInt(getUp.get(n).getLastSix());
+        if (Objects.equals(getUp.get(n).getLastSix(), "")/* || Objects.equals(getUp.get(n).getLastSix(), null)*/) {
+            lastSix = Operator.getSixStar().length;
+        } else {
+            lastSix = Integer.parseInt(getUp.get(n).getLastSix());
+        }
 
-        if (Objects.equals(getUp.get(n).getLastFive(), "")) LastFive = Operator.getFiveStar().length;
-        else LastFive = Integer.parseInt(getUp.get(n).getLastFive());
+        if (Objects.equals(getUp.get(n).getLastFive(), "")/* || Objects.equals(getUp.get(n).getLastFive(), null)*/) {
+            lastFive = Operator.getFiveStar().length;
+        } else {
+            lastFive = Integer.parseInt(getUp.get(n).getLastFive());
+        }
 
-        if (Objects.equals(getUp.get(n).getLastFour(), "")) LastFour = Operator.getFourStar().length;
-        else LastFour = Integer.parseInt(getUp.get(n).getLastFour());
+        if (Objects.equals(getUp.get(n).getLastFour(), "")/* || Objects.equals(getUp.get(n).getLastFour(), null)*/) {
+            lastFour = Operator.getFourStar().length;
+        } else {
+            lastFour = Integer.parseInt(getUp.get(n).getLastFour());
+        }
 
-        if (Objects.equals(getUp.get(n).getLastThree(), "")) LastThree = Operator.getThreeStar().length;
-        else LastThree = Integer.parseInt(getUp.get(n).getLastThree());
+        if (Objects.equals(getUp.get(n).getLastThree(), "")/* || Objects.equals(getUp.get(n).getLastThree(), null)*/) {
+            lastThree = Operator.getThreeStar().length;
+        } else {
+            lastThree = Integer.parseInt(getUp.get(n).getLastThree());
+        }
         //将读取的数据导入
-        GetOperator.setLastSix(LastSix);
-        GetOperator.setLastFive(LastFive);
-        GetOperator.setLastFour(LastFour);
-        GetOperator.setLastThree(LastThree);
+        GetOperator.setLastSix(lastSix);
+        GetOperator.setLastFive(lastFive);
+        GetOperator.setLastFour(lastFour);
+        GetOperator.setLastThree(lastThree);
     }
 }
